@@ -12,8 +12,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && mkdir -p -m 0700 /root/.ssh \
     && ssh-keyscan github.com >> /root/.ssh/known_hosts
 
-COPY requirements.txt .
-RUN --mount=type=ssh pip install --no-cache-dir -r requirements.txt
+# requirements.lock.txt (generated via `pip freeze` from a known-working
+# local venv) is used instead of requirements.txt's loose >= ranges - a
+# fresh container has no pip cache to shortcut resolution the way local dev
+# does, and the private continuum dependency's own pins collide with those
+# ranges badly enough that pip's resolver blows past its backtracking limit
+# (ResolutionTooDeep) trying to satisfy them from scratch. Exact-pinned
+# versions mean no resolution search is needed at all. Regenerate with:
+#   ./.venv/bin/pip freeze > requirements.lock.txt
+COPY requirements.lock.txt .
+RUN --mount=type=ssh pip install --no-cache-dir -r requirements.lock.txt
 
 COPY . .
 
