@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sentinel AI — the control center that tells you what's about to break, why it broke, and what it's costing you, before you have to find out the hard way."
+    />
+    <title>Sentinel AI — AI Engineering Control Center</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Apply the persisted theme before first paint to avoid a flash of the
+      // wrong theme. Defaults to dark. Kept in sync afterwards by useTheme().
+      (function () {
+        try {
+          var stored = localStorage.getItem('sentinel-ui-store')
+          var theme = 'dark'
+          if (stored) {
+            var parsed = JSON.parse(stored)
+            if (parsed && parsed.state && parsed.state.theme) theme = parsed.state.theme
+          }
+          document.documentElement.classList.toggle('dark', theme === 'dark')
+        } catch (e) {
+          /* keep the default dark class already on <html> */
+        }
+      })()
+    </script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

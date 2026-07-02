@@ -1,0 +1,216 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Sentinel AI design tokens.
+  Enterprise SaaS palette — indigo/cyan brand accent with semantic status colors
+  reused everywhere via badges. No component should hardcode a raw color value;
+  everything routes through these tokens. `:root` is the light theme; `.dark`
+  (toggled on <html>) overrides the raw color tokens. Alias tokens below reference
+  var(--surface) etc., so they resolve per-theme without being redefined.
+*/
+:root {
+  color-scheme: light;
+
+  --background: oklch(0.99 0.002 285);
+  --surface: oklch(0.975 0.003 285);
+  --surface-elevated: oklch(0.955 0.005 285);
+  --surface-hover: oklch(0.935 0.006 285);
+
+  --foreground: oklch(0.22 0.01 285);
+  --muted-foreground: oklch(0.45 0.014 285);
+  --subtle-foreground: oklch(0.58 0.012 285);
+
+  --border: oklch(0.912 0.005 285);
+  --border-strong: oklch(0.85 0.007 285);
+
+  --primary: oklch(0.55 0.2 275);
+  --primary-foreground: oklch(0.99 0.005 285);
+  --primary-muted: oklch(0.55 0.2 275 / 0.12);
+
+  --accent-cyan: oklch(0.6 0.12 210);
+  --accent-cyan-muted: oklch(0.6 0.12 210 / 0.12);
+
+  --success: oklch(0.5 0.15 155);
+  --success-muted: oklch(0.5 0.15 155 / 0.13);
+  --warning: oklch(0.52 0.13 70);
+  --warning-muted: oklch(0.52 0.13 70 / 0.15);
+  --danger: oklch(0.52 0.21 25);
+  --danger-muted: oklch(0.52 0.21 25 / 0.12);
+  --info: oklch(0.52 0.15 235);
+  --info-muted: oklch(0.52 0.15 235 / 0.12);
+
+  /* Theme-agnostic aliases — resolve against the active raw tokens above. */
+  --card: var(--surface);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-elevated);
+  --popover-foreground: var(--foreground);
+  --secondary: var(--surface-elevated);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--surface-elevated);
+  --destructive: var(--danger);
+  --destructive-foreground: oklch(0.99 0.005 285);
+  --input: var(--border);
+  --ring: var(--primary);
+
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --background: oklch(0.145 0.004 285);
+  --surface: oklch(0.175 0.005 285);
+  --surface-elevated: oklch(0.205 0.006 285);
+  --surface-hover: oklch(0.235 0.007 285);
+
+  --foreground: oklch(0.97 0.002 285);
+  --muted-foreground: oklch(0.64 0.012 285);
+  --subtle-foreground: oklch(0.48 0.012 285);
+
+  --border: oklch(0.28 0.008 285);
+  --border-strong: oklch(0.34 0.01 285);
+
+  --primary: oklch(0.62 0.19 275);
+  --primary-foreground: oklch(0.98 0.005 285);
+  --primary-muted: oklch(0.62 0.19 275 / 0.15);
+
+  --accent-cyan: oklch(0.78 0.13 210);
+  --accent-cyan-muted: oklch(0.78 0.13 210 / 0.15);
+
+  --success: oklch(0.72 0.17 155);
+  --success-muted: oklch(0.72 0.17 155 / 0.14);
+  --warning: oklch(0.79 0.15 80);
+  --warning-muted: oklch(0.79 0.15 80 / 0.14);
+  --danger: oklch(0.65 0.21 25);
+  --danger-muted: oklch(0.65 0.21 25 / 0.14);
+  --info: oklch(0.7 0.13 235);
+  --info-muted: oklch(0.7 0.13 235 / 0.14);
+
+  --destructive-foreground: oklch(0.98 0.005 285);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-hover: var(--surface-hover);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-muted: var(--primary-muted);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-cyan-muted: var(--accent-cyan-muted);
+
+  --color-success: var(--success);
+  --color-success-muted: var(--success-muted);
+  --color-warning: var(--warning);
+  --color-warning-muted: var(--warning-muted);
+  --color-danger: var(--danger);
+  --color-danger-muted: var(--danger-muted);
+  --color-info: var(--info);
+  --color-info-muted: var(--info-muted);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-accent: var(--surface-elevated);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --animate-fade-in: fade-in 0.3s ease-out;
+  --animate-slide-up: slide-up 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--primary-muted);
+    color: var(--foreground);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: 999px;
+    border: 2px solid var(--background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--subtle-foreground);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .font-mono-tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
