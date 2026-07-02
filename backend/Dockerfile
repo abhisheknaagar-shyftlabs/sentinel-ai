@@ -1,4 +1,8 @@
-FROM python:3.12-slim
+# shyftlabs-continuum requires Python >=3.13 - discovered live during EC2
+# deployment (python:3.12-slim's real error, once requirements.lock.txt
+# removed the resolver-blowup noise, was "requires a different Python:
+# 3.12.13 not in '>=3.13'"), not assumed up front.
+FROM python:3.13-slim
 
 WORKDIR /app
 
